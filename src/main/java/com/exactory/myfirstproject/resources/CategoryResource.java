@@ -56,7 +56,7 @@ public class CategoryResource {
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<Category> findById(@PathVariable Long id) { //anotatopn @PathVariable (id colocado no endpoint)
 		//Category cat = new Category(1L, "Eletronics");
-		Category cat = categoryRepository.findById(id);
+		Category cat = categoryRepository.findById(id).get(); //inserido um .get pois o findById retorna um optional
 		return ResponseEntity.ok().body(cat);
 	}
 }

@@ -4,18 +4,29 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+
 //biblioteca responsável por serializar 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+@Entity
 public class Category implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
+	@Id //campo que será o id da tabela
+	@GeneratedValue(strategy = GenerationType.IDENTITY) //indica que ele será auto incremetal
 	private Long id;
 	private String name;
 	
 	//implementando a referência da classe product dentro da categoria (relação ManyToOne)
-	//para evitar referência circular (categoria chamando produto que chama categoria), uscamos anotation JsonIgnore
-	@JsonIgnore
+	@JsonIgnore //para evitar referência circular (categoria chamando produto que chama categoria), uscamos anotation JsonIgnore
+	@OneToMany(mappedBy = "category")  //relacionamento 1 categoria para n produtos (precisa indicar o nome do atributo da tabela product)
+	//@JoinColumn(name = "product_id") //nome da chave strangeira na tabela
 	private List<Product> products = new ArrayList<>();
 	
 	public Category() {

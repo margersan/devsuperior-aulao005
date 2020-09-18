@@ -2,14 +2,27 @@ package com.exactory.myfirstproject.entities;
 
 import java.io.Serializable;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
+//mapeamento relacional
+@Entity
 public class Product implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
+	@Id //identificando o ID da tabela
+	@GeneratedValue(strategy = GenerationType.IDENTITY) //anotation para indicar ID auto-incremental
 	private Long id;
 	private String name;
 	private Double price;
 	
 	//referência a classe Categoria do diagrama de classes - (relação OneToMany)
+	@ManyToOne //chave estrangiera - relacionamento muitos para um
+	@JoinColumn(name = "category_id") //nome do campo chave-estrangeira no banco de dados
 	private Category category;
 	
 	public Product() {

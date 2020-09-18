@@ -27,7 +27,7 @@ public class ProductResource {
 	
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<Product> findById(@PathVariable Long id) { //anotation @PathVariable (id colocado no endpoint)
-		Product cat = productRepository.findById(id);
+		Product cat = productRepository.findById(id).get();
 		return ResponseEntity.ok().body(cat);
 	}
 }
